@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'feature_a.dart';
 import 'feature_b.dart';
+import 'feature_c.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,6 +26,12 @@ class MyApp extends StatelessWidget {
                   onClose: () => Navigator.of(innerContext).pop(),
                 );
             break;
+          case 'c':
+            builder = (innerContext) => FeatureCNavigator(
+                  onClose: () => Navigator.of(innerContext).pop(),
+                  onNextFeature: () => Navigator.pushNamed(innerContext, 'b'),
+                );
+            break;
         }
 
         return MaterialPageRoute(
@@ -40,6 +47,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const divider = SizedBox(height: 8);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Base nav example')),
       body: Center(
@@ -49,10 +58,15 @@ class MyHomePage extends StatelessWidget {
               child: Text('A'),
               onPressed: () => Navigator.pushNamed(context, 'a'),
             ),
-            const SizedBox(height: 8),
+            divider,
             RaisedButton(
               child: Text('B'),
               onPressed: () => Navigator.pushNamed(context, 'b'),
+            ),
+            divider,
+            RaisedButton(
+              child: Text('C'),
+              onPressed: () => Navigator.pushNamed(context, 'c'),
             ),
           ],
         ),
