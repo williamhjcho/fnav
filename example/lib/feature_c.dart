@@ -1,6 +1,8 @@
 import 'package:basenav/basenav.dart';
 import 'package:flutter/material.dart';
 
+import 'simple_screen.dart';
+
 class FeatureCNavigator extends RouteNavigator {
   FeatureCNavigator({
     @required VoidCallback onClose,
@@ -8,7 +10,9 @@ class FeatureCNavigator extends RouteNavigator {
   }) : super(initialRoute: Navigator.defaultRouteName, routes: {
           '/': (settings) {
             return MaterialPageRoute(
-              builder: (context) => _Home(
+              builder: (context) => SimpleScreen(
+                title: 'Feature C',
+                backgroundColor: Colors.blue,
                 onBack: onClose,
                 onNext: () =>
                     Navigator.pushNamed(context, 'another', arguments: 1),
@@ -22,7 +26,9 @@ class FeatureCNavigator extends RouteNavigator {
               builder: (context) {
                 final int count = settings.arguments;
 
-                return _Home(
+                return SimpleScreen(
+                  title: 'Feature C',
+                  backgroundColor: Colors.blue,
                   count: count,
                   onBack: () => Navigator.pop(context),
                   onNext: () => Navigator.pushNamed(context, 'another',
@@ -34,45 +40,4 @@ class FeatureCNavigator extends RouteNavigator {
             );
           },
         });
-}
-
-class _Home extends StatelessWidget {
-  const _Home({
-    Key key,
-    this.count = 0,
-    @required this.onBack,
-    @required this.onNext,
-    @required this.onNextFeature,
-  }) : super(key: key);
-
-  final int count;
-  final VoidCallback onBack, onNext, onNextFeature;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.red,
-      appBar: AppBar(
-        title: Text('Feature C' + (count == 0 ? '' : '($count)')),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: onBack,
-        ),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            RaisedButton(
-              child: Text('NEXT'),
-              onPressed: onNext,
-            ),
-            RaisedButton(
-              child: Text('FEATURE B'),
-              onPressed: onNextFeature,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
