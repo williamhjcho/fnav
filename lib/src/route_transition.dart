@@ -15,13 +15,13 @@ import 'package:flutter/material.dart';
 /// Usually it is a [MaterialPageRoute] or [CupertinoPageRoute] transitions.
 ///
 /// See [materialRouteTransition] and [cupertinoRouteTransition].
-abstract class ScreenRouteTransition {
-  const ScreenRouteTransition() : super();
+abstract class RouteTransition {
+  const RouteTransition() : super();
 
   Route<T> transition<T>(WidgetBuilder builder, RouteSettings settings);
 }
 
-class MaterialScreenTransition extends ScreenRouteTransition {
+class MaterialScreenTransition extends RouteTransition {
   const MaterialScreenTransition() : super();
 
   @override
@@ -39,7 +39,7 @@ class MaterialScreenTransition extends ScreenRouteTransition {
       );
 }
 
-class CupertinoScreenTransition extends ScreenRouteTransition {
+class CupertinoScreenTransition extends RouteTransition {
   const CupertinoScreenTransition() : super();
 
   @override

@@ -1,12 +1,13 @@
 import 'package:flutter/widgets.dart';
 
+import 'route_details.dart';
+import 'route_transition.dart';
 import 'router.dart';
-import 'screen_route.dart';
-import 'screen_route_transition.dart';
 
 typedef RouteBuilder = Route Function(RouteSettings);
-typedef ScreenBuilder = ScreenRoute Function(RouteSettings);
+typedef ScreenBuilder = RouteDetails Function(RouteSettings);
 
+/// A simple [Navigator] that handles navigation via a registry of [routes]
 class RouteNavigator extends Navigator {
   RouteNavigator({
     Key key,
@@ -20,7 +21,6 @@ class RouteNavigator extends Navigator {
           initialRoute: initialRoute,
           onGenerateRoute: (settings) {
             final routeBuilder = routes[settings.name];
-            // TODO: assert/throw or let onUnknownRoute handle it?
             if (routeBuilder != null) return routeBuilder(settings);
             return null;
           },
@@ -29,6 +29,8 @@ class RouteNavigator extends Navigator {
         );
 }
 
+/// A [RouteNavigator] that handles navigation via a registry of [routes] that
+/// generate [RouteDetails]s instead.
 class ScreenRouteNavigator extends RouteNavigator {
   ScreenRouteNavigator({
     Key key,
@@ -36,7 +38,7 @@ class ScreenRouteNavigator extends RouteNavigator {
     @required Map<String, ScreenBuilder> routes,
     RouteFactory onUnknownRoute,
     List<NavigatorObserver> observers = const <NavigatorObserver>[],
-    ScreenRouteTransition defaultTransition = materialRouteTransition,
+    RouteTransition defaultTransition = materialRouteTransition,
   })  : assert(routes != null),
         assert(defaultTransition != null),
         super(
@@ -49,7 +51,7 @@ class ScreenRouteNavigator extends RouteNavigator {
 
   static Map<String, RouteBuilder> buildRoutesFrom(
     Map<String, ScreenBuilder> routes,
-    ScreenRouteTransition defaultTransition,
+    RouteTransition defaultTransition,
   ) {
     return routes.map<String, RouteBuilder>(
       (route, screenBuilder) => MapEntry(route, (settings) {
@@ -63,6 +65,9 @@ class ScreenRouteNavigator extends RouteNavigator {
   }
 }
 
+/// A [Navigator] that uses a [Router] to handle the actual [Route] transitions,
+/// while this [Navigator] is responsible for observation and access from the
+/// [Widget] tree.
 class RouterNavigator extends Navigator {
   RouterNavigator({
     Key key,
@@ -70,7 +75,7 @@ class RouterNavigator extends Navigator {
     @required Router router,
     RouteFactory onUnknownRoute,
     List<NavigatorObserver> observers = const <NavigatorObserver>[],
-    ScreenRouteTransition defaultTransition = materialRouteTransition,
+    RouteTransition defaultTransition = materialRouteTransition,
   })  : assert(router != null),
         assert(defaultTransition != null),
         super(

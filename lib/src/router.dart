@@ -1,19 +1,17 @@
 import 'package:basenav/basenav.dart';
 import 'package:flutter/widgets.dart';
 
-import 'screen_route.dart';
-
-/// A [Router] should aggregate the possible [ScreenRoute]s.
+/// A [Router] should aggregate the possible [RouteDetails]s.
 ///
 /// - [open] attempts to open a route from a [RouteSettings] (this is
 /// usually called on [Navigator.onGenerateRoute]).
 abstract class Router {
   const Router() : super();
 
-  /// Retrieves a [ScreenRoute] from [settings].
+  /// Retrieves a [RouteDetails] from [settings].
   ///
   /// Returns null if none are found.
-  ScreenRoute open(RouteSettings settings);
+  RouteDetails open(RouteSettings settings);
 }
 
 /// The simplest form of a [Router] that opens routes when [RouteSettings.name]
@@ -23,8 +21,8 @@ class NamedMapRouter extends Router {
       : assert(routes != null),
         super();
 
-  final Map<String, ScreenRoute> routes;
+  final Map<String, RouteDetails> routes;
 
   @override
-  ScreenRoute open(RouteSettings settings) => routes[settings.name];
+  RouteDetails open(RouteSettings settings) => routes[settings.name];
 }

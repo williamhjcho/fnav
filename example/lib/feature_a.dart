@@ -113,7 +113,7 @@ class FeatureA1Navigator extends RouteNavigator {
 /* -------------------------------------------------------- */
 
 /// Simple named key -> Screen<dynamic> map
-/// Same as above but now introduces the concept of a [ScreenRoute], which
+/// Same as above but now introduces the concept of a [RouteDetails], which
 /// are simple encapsulated data objects that hold only the ui transition
 /// method and the actual builder for the [Widget] being presented.
 class FeatureA2Navigator extends ScreenRouteNavigator {
@@ -122,7 +122,7 @@ class FeatureA2Navigator extends ScreenRouteNavigator {
     @required VoidCallback onNextFeature,
   }) : super(routes: {
           '/': (settings) {
-            return ScreenRoute(
+            return RouteDetails(
               builder: (context) => _FeatureAScreen(
                 title: 'Feature A2',
                 onBack: onClose,
@@ -133,7 +133,7 @@ class FeatureA2Navigator extends ScreenRouteNavigator {
             );
           },
           'another': (settings) {
-            return ScreenRoute(
+            return RouteDetails(
               builder: (context) {
                 final int count = settings.arguments;
 
@@ -155,7 +155,7 @@ class FeatureA2Navigator extends ScreenRouteNavigator {
 
 /// Same as above, introduces the concept of a Router class that
 /// is responsible for containing the UI presentation logic
-/// ([RouteSettings]) -> [ScreenRoute].
+/// ([RouteSettings]) -> [RouteDetails].
 class FeatureA3Navigator extends RouterNavigator {
   FeatureA3Navigator({
     @required VoidCallback onClose,
@@ -176,7 +176,7 @@ class FeatureA3Router extends Router {
 
   final VoidCallback onClose, onNextFeature;
 
-  ScreenRoute home() => ScreenRoute(builder: (context) {
+  RouteDetails home() => RouteDetails(builder: (context) {
         return _FeatureAScreen(
           title: 'Feature A3',
           onBack: onClose,
@@ -185,7 +185,7 @@ class FeatureA3Router extends Router {
         );
       });
 
-  ScreenRoute another(int count) => ScreenRoute(builder: (context) {
+  RouteDetails another(int count) => RouteDetails(builder: (context) {
         return _FeatureAScreen(
           title: 'Feature A3',
           count: count,
@@ -197,7 +197,7 @@ class FeatureA3Router extends Router {
       });
 
   @override
-  ScreenRoute open(RouteSettings settings) {
+  RouteDetails open(RouteSettings settings) {
     if (settings.name == Navigator.defaultRouteName) {
       return home();
     } else {
@@ -227,7 +227,7 @@ class FeatureA4Navigator extends StatelessWidget {
 class FeatureA4Router extends Router {
   const FeatureA4Router() : super();
 
-  ScreenRoute home() => ScreenRoute(builder: (context) {
+  RouteDetails home() => RouteDetails(builder: (context) {
         final navigation = FeatureA4Navigation.of(context);
 
         return _FeatureAScreen(
@@ -238,7 +238,7 @@ class FeatureA4Router extends Router {
         );
       });
 
-  ScreenRoute another(int count) => ScreenRoute(builder: (context) {
+  RouteDetails another(int count) => RouteDetails(builder: (context) {
         final navigation = FeatureA4Navigation.of(context);
 
         return _FeatureAScreen(
@@ -251,7 +251,7 @@ class FeatureA4Router extends Router {
       });
 
   @override
-  ScreenRoute open(RouteSettings settings) {
+  RouteDetails open(RouteSettings settings) {
     if (settings.name == Navigator.defaultRouteName) {
       return home();
     } else {
