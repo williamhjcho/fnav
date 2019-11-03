@@ -9,6 +9,9 @@ class ScreenRoute {
   })  : assert(builder != null),
         super();
 
+  /// The transition used when presenting the [builder].
+  ///
+  /// If null defaults to [ScreenRouteNavigator.defaultTransition].
   final ScreenRouteTransition transition;
   final WidgetBuilder builder;
 }

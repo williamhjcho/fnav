@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'feature_a.dart';
 import 'feature_b.dart';
-import 'feature_c.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,20 +15,14 @@ class MyApp extends StatelessWidget {
         WidgetBuilder builder;
         switch (settings.name) {
           case 'a':
-            builder = (innerContext) => FeatureANavigator(
-                  onClose: () => Navigator.of(innerContext).pop(),
-                  onNextFeature: () => Navigator.pushNamed(innerContext, 'b'),
+            builder = (innerContext) => FeatureA4Navigator(
+//                  onClose: () => Navigator.of(innerContext).pop(),
+//                  onNextFeature: () => Navigator.pushNamed(innerContext, 'b'),
                 );
             break;
           case 'b':
             builder = (innerContext) => FeatureBNavigator(
                   onClose: () => Navigator.of(innerContext).pop(),
-                );
-            break;
-          case 'c':
-            builder = (innerContext) => FeatureCNavigator(
-                  onClose: () => Navigator.of(innerContext).pop(),
-                  onNextFeature: () => Navigator.pushNamed(innerContext, 'b'),
                 );
             break;
         }
@@ -62,11 +55,6 @@ class MyHomePage extends StatelessWidget {
             RaisedButton(
               child: Text('B'),
               onPressed: () => Navigator.pushNamed(context, 'b'),
-            ),
-            divider,
-            RaisedButton(
-              child: Text('C'),
-              onPressed: () => Navigator.pushNamed(context, 'c'),
             ),
           ],
         ),

@@ -1,82 +1,44 @@
-import 'package:basenav/basenav.dart';
 import 'package:flutter/material.dart';
 
 import 'simple_screen.dart';
 
-// Simple named key -> Route<T> map
-class FeatureCNavigator extends RouteNavigator {
+class FeatureCNavigator extends Navigator {
   FeatureCNavigator({
+    String initialRoute,
     @required VoidCallback onClose,
-    @required VoidCallback onNextFeature,
-  }) : super(routes: {
-          '/': (settings) {
+  }) : super(
+          initialRoute: initialRoute,
+          onGenerateRoute: (settings) {
+            WidgetBuilder builder;
+            switch (settings.name) {
+              case Navigator.defaultRouteName:
+                builder = (context) {
+                  return SimpleScreen(
+                    title: 'Feature B',
+                    backgroundColor: Colors.yellow,
+                    onBack: onClose,
+                    onNext: () => Navigator.of(context).pushNamed('another'),
+                  );
+                };
+                break;
+              case 'another':
+                builder = (context) {
+                  return SimpleScreen(
+                    title: 'Feature B',
+                    backgroundColor: Colors.yellow,
+                    onBack: () => Navigator.of(context).pop(),
+                    onNext: () => Navigator.of(context).pushNamed('another'),
+                  );
+                };
+                break;
+              default:
+                break;
+            }
+
             return MaterialPageRoute(
-              builder: (context) => SimpleScreen(
-                title: 'Feature C',
-                backgroundColor: Colors.blue,
-                onBack: onClose,
-                onNext: () =>
-                    Navigator.pushNamed(context, 'another', arguments: 1),
-                onNextFeature: onNextFeature,
-              ),
+              builder: builder,
               settings: settings,
             );
           },
-          'another': (settings) {
-            return MaterialPageRoute(
-              builder: (context) {
-                final int count = settings.arguments;
-
-                return SimpleScreen(
-                  title: 'Feature C',
-                  backgroundColor: Colors.blue,
-                  count: count,
-                  onBack: () => Navigator.pop(context),
-                  onNext: () => Navigator.pushNamed(context, 'another',
-                      arguments: count + 1),
-                  onNextFeature: onNextFeature,
-                );
-              },
-              settings: settings,
-            );
-          },
-        });
-}
-
-// Simple named key -> Screen<dynamic> map
-class FeatureC2Navigator extends ScreenRouteNavigator {
-  FeatureC2Navigator({
-    @required VoidCallback onClose,
-    @required VoidCallback onNextFeature,
-  }) : super(routes: {
-          '/': (settings) {
-            return ScreenRoute(
-              builder: (context) => SimpleScreen(
-                title: 'Feature C',
-                backgroundColor: Colors.blue,
-                onBack: onClose,
-                onNext: () =>
-                    Navigator.pushNamed(context, 'another', arguments: 1),
-                onNextFeature: onNextFeature,
-              ),
-            );
-          },
-          'another': (settings) {
-            return ScreenRoute(
-              builder: (context) {
-                final int count = settings.arguments;
-
-                return SimpleScreen(
-                  title: 'Feature C',
-                  backgroundColor: Colors.blue,
-                  count: count,
-                  onBack: () => Navigator.pop(context),
-                  onNext: () => Navigator.pushNamed(context, 'another',
-                      arguments: count + 1),
-                  onNextFeature: onNextFeature,
-                );
-              },
-            );
-          },
-        });
+        );
 }
