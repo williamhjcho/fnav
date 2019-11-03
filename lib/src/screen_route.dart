@@ -14,4 +14,10 @@ class ScreenRoute {
   /// If null defaults to [ScreenRouteNavigator.defaultTransition].
   final ScreenRouteTransition transition;
   final WidgetBuilder builder;
+
+  Route<T> buildRoute<T>(RouteSettings settings,
+      {ScreenRouteTransition fallbackTransition}) {
+    final effectiveTransition = transition ?? fallbackTransition;
+    return effectiveTransition.transition(builder, settings);
+  }
 }

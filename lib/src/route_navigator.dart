@@ -53,14 +53,11 @@ class ScreenRouteNavigator extends RouteNavigator {
   ) {
     return routes.map<String, RouteBuilder>(
       (route, screenBuilder) => MapEntry(route, (settings) {
-        // TODO: assert/throw?
-        Route route;
         final screen = screenBuilder(settings);
-        if (screen != null) {
-          final transition = screen.transition ?? defaultTransition;
-          route = transition.transition(screen.builder, settings);
-        }
-        return route;
+        return screen?.buildRoute(
+          settings,
+          fallbackTransition: defaultTransition,
+        );
       }),
     );
   }
@@ -80,13 +77,11 @@ class RouterNavigator extends Navigator {
           key: key,
           initialRoute: initialRoute,
           onGenerateRoute: (settings) {
-            Route route;
             final screen = router.open(settings);
-            if (screen != null) {
-              final transition = screen.transition ?? defaultTransition;
-              route = transition.transition(screen.builder, settings);
-            }
-            return route;
+            return screen?.buildRoute(
+              settings,
+              fallbackTransition: defaultTransition,
+            );
           },
           onUnknownRoute: onUnknownRoute,
           observers: observers,
