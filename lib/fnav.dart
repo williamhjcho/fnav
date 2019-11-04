@@ -1,4 +1,4 @@
-library basenav;
+library fnav;
 
 export 'src/navigation.dart';
 export 'src/route_details.dart';

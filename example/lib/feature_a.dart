@@ -1,5 +1,5 @@
-import 'package:basenav/basenav.dart';
 import 'package:flutter/material.dart';
+import 'package:fnav/fnav.dart';
 
 import 'simple_screen.dart';
 

@@ -1,5 +1,6 @@
-import 'package:basenav/basenav.dart';
 import 'package:flutter/widgets.dart';
+
+import 'route_details.dart';
 
 /// A [Router] should aggregate the possible [RouteDetails]s.
 ///

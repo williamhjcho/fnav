@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 /// This class should coordinate the actual transitions usually starting from a
 /// [BuildContext], be it from the [parentContext] (usually to go back/pop)
