@@ -20,6 +20,6 @@ class RouteDetails {
   Route<T> buildRoute<T>(RouteSettings settings,
       {RouteTransition fallbackTransition}) {
     final effectiveTransition = transition ?? fallbackTransition;
-    return effectiveTransition.transition(builder, settings);
+    return effectiveTransition?.transition(builder, settings);
   }
 }
