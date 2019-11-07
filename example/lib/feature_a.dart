@@ -26,6 +26,13 @@ class _FeatureAScreen extends SimpleScreen {
 /// The callbacks to other features are just to make it clear to understand only
 /// what this class is solely responsible for, but they can be called from inside
 /// this class as well.
+///
+/// The navigator here is responsible for:
+/// - Knowing how to create all the screens that are presented
+/// - handling their return types
+/// - making the connection of one route to another (usually by receiving args)
+/// - knowing how to transition in and out of a screen (push/pop/replace, and
+/// transition animation)
 class FeatureANavigator extends Navigator {
   FeatureANavigator({
     @required VoidCallback onClose,
@@ -156,6 +163,9 @@ class FeatureA2Navigator extends ScreenRouteNavigator {
 /// Same as above, introduces the concept of a Router class that
 /// is responsible for containing the UI presentation logic
 /// ([RouteSettings]) -> [RouteDetails].
+///
+/// Here a navigator is only responsible for registering a router and
+/// registering the callbacks that are outside this navigator's responsibility
 class FeatureA3Navigator extends RouterNavigator {
   FeatureA3Navigator({
     @required VoidCallback onClose,
@@ -168,6 +178,11 @@ class FeatureA3Navigator extends RouterNavigator {
         );
 }
 
+/// The router is the one that knows:
+/// - how to open each screen
+/// - register the in and out args from the routes
+/// - add the transition types (if not using some default)
+/// - handles (RouteSettings) -> Route logic
 class FeatureA3Router extends Router {
   const FeatureA3Router({
     @required this.onClose,
@@ -279,8 +294,10 @@ class FeatureA4Navigation extends Navigation {
   /// requires this navigation to know only the url for the other feature
   Future<void> toFeatureB() => Navigator.of(parentContext).pushNamed('b');
 
-  // This one is only for taxonomy, since it is the first thing the router already presents
-  // this might be useful if the flow required to pop to the first target
+  // This one is only for taxonomy, since it is the first thing the router
+  // already presents.
+  // This might be more useful if the flow required to pop to the first target
+  // for example
 //  Future<void> toHome(BuildContext context) => Navigator.of(context).pushNamed('/');
 
   Future<void> toAnother(BuildContext context, {@required int count}) =>
