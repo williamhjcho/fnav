@@ -191,7 +191,7 @@ class FeatureA3Router extends Router {
 
   final VoidCallback onClose, onNextFeature;
 
-  RouteDetails home() => RouteDetails(builder: (context) {
+  RouteDetails<void> home() => RouteDetails(builder: (context) {
         return _FeatureAScreen(
           title: 'Feature A3',
           onBack: onClose,
@@ -200,7 +200,7 @@ class FeatureA3Router extends Router {
         );
       });
 
-  RouteDetails another(int count) => RouteDetails(builder: (context) {
+  RouteDetails<void> another(int count) => RouteDetails(builder: (context) {
         return _FeatureAScreen(
           title: 'Feature A3',
           count: count,
@@ -212,7 +212,7 @@ class FeatureA3Router extends Router {
       });
 
   @override
-  RouteDetails open(RouteSettings settings) {
+  RouteDetails<void> open(RouteSettings settings) {
     if (settings.name == Navigator.defaultRouteName) {
       return home();
     } else {
@@ -242,7 +242,7 @@ class FeatureA4Navigator extends StatelessWidget {
 class FeatureA4Router extends Router {
   const FeatureA4Router() : super();
 
-  RouteDetails home() => RouteDetails(builder: (context) {
+  RouteDetails<void> home() => RouteDetails(builder: (context) {
         final navigation = FeatureA4Navigation.of(context);
 
         return _FeatureAScreen(
@@ -253,7 +253,7 @@ class FeatureA4Router extends Router {
         );
       });
 
-  RouteDetails another(int count) => RouteDetails(builder: (context) {
+  RouteDetails<void> another(int count) => RouteDetails(builder: (context) {
         final navigation = FeatureA4Navigation.of(context);
 
         return _FeatureAScreen(

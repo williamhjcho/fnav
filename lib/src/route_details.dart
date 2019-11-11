@@ -4,7 +4,7 @@ import 'route_transition.dart';
 
 /// A [Route] data object with the necessary information for transitioning to
 /// a new [Route].
-class RouteDetails {
+class RouteDetails<T> {
   const RouteDetails({
     this.transition,
     @required this.builder,
@@ -14,7 +14,7 @@ class RouteDetails {
   /// The transition used when presenting the [builder].
   ///
   /// If null defaults to [ScreenRouteNavigator.defaultTransition].
-  final RouteTransition transition;
+  final RouteTransition<T> transition;
   final WidgetBuilder builder;
 
   Route<T> buildRoute<T>(RouteSettings settings,

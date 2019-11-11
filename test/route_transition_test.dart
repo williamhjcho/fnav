@@ -7,17 +7,17 @@ void main() {
   final settings = RouteSettings();
 
   test('MaterialScreenTransition', () {
-    final transition = MaterialScreenTransition();
+    final transition = MaterialScreenTransition<String>();
     expect(
-      transition.transition<String>(expectAsync1(null, count: 0), settings),
+      transition.transition(expectAsync1(null, count: 0), settings),
       isA<MaterialPageRoute<String>>(),
     );
   });
 
   test('CupertinoScreenTransition', () {
-    final transition = CupertinoScreenTransition();
+    final transition = CupertinoScreenTransition<String>();
     expect(
-      transition.transition<String>(expectAsync1(null, count: 0), settings),
+      transition.transition(expectAsync1(null, count: 0), settings),
       isA<CupertinoPageRoute<String>>(),
     );
   });
